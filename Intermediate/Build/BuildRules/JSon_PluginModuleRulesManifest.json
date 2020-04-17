@@ -1,8 +1,0 @@
-{
-	"SourceFiles": [
-		"C:\\EPICGAMES\\JSon_Plugin\\Source\\JSon_Plugin\\JSon_Plugin.Build.cs",
-		"C:\\EPICGAMES\\JSon_Plugin\\Source\\JSon_Plugin.Target.cs",
-		"C:\\EPICGAMES\\JSon_Plugin\\Source\\JSon_PluginEditor.Target.cs"
-	],
-	"EngineVersion": "4.24.3"
-}
