@@ -1,0 +1,10 @@
+{
+	"SaveDate": "2020.04.17-14.50.13",
+	"Character": "dAVE",
+	"Items": [
+		"StaticMeshActor /Game/UEDPIE_0_JsonDemo.JsonDemo:PersistentLevel.Floor",
+		"StaticMeshActor /Game/UEDPIE_0_JsonDemo.JsonDemo:PersistentLevel.Sphere_2",
+		"StaticMeshActor /Game/UEDPIE_0_JsonDemo.JsonDemo:PersistentLevel.Cube_5"
+	],
+	"ItemCount": [ 3 ]
+}
