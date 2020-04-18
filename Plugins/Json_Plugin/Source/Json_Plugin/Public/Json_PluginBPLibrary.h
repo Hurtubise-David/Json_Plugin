@@ -27,6 +27,10 @@ class UJson_PluginBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Execute Sample function", Keywords = "Json_Plugin sample test testing"), Category = "Json_PluginTesting")
-	static float Json_PluginSampleFunction(float Param);
+	UFUNCTION(Blueprintcallable, Category = "Json Utilities")
+		static bool WriteInventoryData(FString CharName, TArray<AActor*> InventoryItems, TArray<int> InventoryCount);
+
+	UFUNCTION(BlueprintCallable, Category = "Json Utilities")
+		static bool ReadInventoryData(FDateTime& SaveDate, FString& CharName, TArray<FString>& InventoryItems, TArray<int>& InventoryCount);
+
 };
