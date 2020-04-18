@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "Json_Plugin",
-	"Description": "Plugin to read / write Json files at runtime",
+	"Description": "Plugin to read / write Json files",
 	"Category": "Other",
 	"CreatedBy": "David Hurtubise",
 	"CreatedByURL": "",
@@ -13,5 +13,12 @@
 	"CanContainContent": true,
 	"IsBetaVersion": true,
 	"IsExperimentalVersion": false,
-	"Installed": false
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "Json_Plugin",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
 }
