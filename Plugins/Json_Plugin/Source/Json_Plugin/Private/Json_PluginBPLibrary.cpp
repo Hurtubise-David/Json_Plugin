@@ -7,9 +7,6 @@
 #include "Json_Plugin.h"
 
 static const FString RootName("inventoryObject");
-static const FString WritePath(FPaths::ProjectSavedDir() / "Json");
-static const FString InventoryFileName("InventoryData.json");
-static const FString FilepathFull(WritePath / InventoryFileName);
 
 UJson_PluginBPLibrary::UJson_PluginBPLibrary(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
@@ -17,7 +14,7 @@ UJson_PluginBPLibrary::UJson_PluginBPLibrary(const FObjectInitializer& ObjectIni
 
 }
 
-bool UJson_PluginBPLibrary::WriteInventoryData(FString CharName, TArray<AActor*> InventoryItems, TArray<int> InventoryCount)
+bool UJson_PluginBPLibrary::WriteInventoryData(FString FileName, FString CharName, TArray<AActor*> InventoryItems, TArray<int> InventoryCount)
 {
 	JsonObjectPtr JsonRootObject = MakeShareable(new FJsonObject);
 
@@ -46,14 +43,21 @@ bool UJson_PluginBPLibrary::WriteInventoryData(FString CharName, TArray<AActor*>
 	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
 	FJsonSerializer::Serialize(JsonRootObject.ToSharedRef(), Writer);
 
-	return FFileHelper::SaveStringToFile(OutputString, *FilepathFull);
+	FString PathFull;
+	PathFull = FPaths::ProjectSavedDir() / "Json";
+	PathFull += "/";
+	PathFull += FileName;
+
+	return FFileHelper::SaveStringToFile(OutputString, *PathFull);
 }
 
 bool UJson_PluginBPLibrary::ReadInventoryData(FDateTime & SaveDate, FString & CharName, TArray<FString>& InventoryItems, TArray<int>& InventoryCount)
 {
 	FString RawData;
+	FString PathFull;
+	PathFull = FPaths::ProjectSavedDir() / "Json";
 
-	bool bloadedfile = FFileHelper::LoadFileToString(RawData, *FilepathFull);
+	bool bloadedfile = FFileHelper::LoadFileToString(RawData, *PathFull);
 
 	if (bloadedfile)
 	{
