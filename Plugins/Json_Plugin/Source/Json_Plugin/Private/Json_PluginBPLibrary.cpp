@@ -47,7 +47,7 @@ bool UJson_PluginBPLibrary::WriteInventoryData(FString FileName, FString CharNam
 	return FFileHelper::SaveStringToFile(OutputString, *Path);
 }
 
-bool UJson_PluginBPLibrary::ReadInventoryData(FString & FileName, FString & CharName, TArray<FString>& InventoryItems, TArray<int>& InventoryCount)
+bool UJson_PluginBPLibrary::ReadInventoryData(FString FileName, FString & CharName, TArray<FString>& InventoryItems, TArray<int>& InventoryCount)
 {
 	FString RawData;
 	FString Path;
