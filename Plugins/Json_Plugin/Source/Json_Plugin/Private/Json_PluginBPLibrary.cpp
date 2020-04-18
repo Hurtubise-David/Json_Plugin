@@ -3,7 +3,6 @@
 #include "Json_PluginBPLibrary.h"
 #include "JsonUtilities/Public/JsonUtilities.h"
 #include "Serialization/JsonReader.h"
-#include "misc/DateTime.h"
 #include "Json_Plugin.h"
 
 static const FString RootName("inventoryObject");
@@ -17,9 +16,6 @@ UJson_PluginBPLibrary::UJson_PluginBPLibrary(const FObjectInitializer& ObjectIni
 bool UJson_PluginBPLibrary::WriteInventoryData(FString FileName, FString CharName, TArray<AActor*> InventoryItems, TArray<int> InventoryCount)
 {
 	JsonObjectPtr JsonRootObject = MakeShareable(new FJsonObject);
-
-	const FString SaveDate = FDateTime::UtcNow().ToString();
-	JsonRootObject->SetStringField("SaveDate", SaveDate);
 
 	JsonRootObject->SetStringField("Character", CharName);
 
@@ -43,21 +39,23 @@ bool UJson_PluginBPLibrary::WriteInventoryData(FString FileName, FString CharNam
 	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
 	FJsonSerializer::Serialize(JsonRootObject.ToSharedRef(), Writer);
 
-	FString PathFull;
-	PathFull = FPaths::ProjectSavedDir() / "Json";
-	PathFull += "/";
-	PathFull += FileName;
+	FString Path;
+	Path = FPaths::ProjectSavedDir() / "Json";
+	Path += "/";
+	Path += FileName;
 
-	return FFileHelper::SaveStringToFile(OutputString, *PathFull);
+	return FFileHelper::SaveStringToFile(OutputString, *Path);
 }
 
-bool UJson_PluginBPLibrary::ReadInventoryData(FDateTime & SaveDate, FString & CharName, TArray<FString>& InventoryItems, TArray<int>& InventoryCount)
+bool UJson_PluginBPLibrary::ReadInventoryData(FString & FileName, FString & CharName, TArray<FString>& InventoryItems, TArray<int>& InventoryCount)
 {
 	FString RawData;
-	FString PathFull;
-	PathFull = FPaths::ProjectSavedDir() / "Json";
+	FString Path;
+	Path = FPaths::ProjectSavedDir() / "Json";
+	Path += "/";
+	Path += FileName;
 
-	bool bloadedfile = FFileHelper::LoadFileToString(RawData, *PathFull);
+	bool bloadedfile = FFileHelper::LoadFileToString(RawData, *Path);
 
 	if (bloadedfile)
 	{
@@ -67,7 +65,6 @@ bool UJson_PluginBPLibrary::ReadInventoryData(FDateTime & SaveDate, FString & Ch
 
 		if (FJsonSerializer::Deserialize(JsonReader, JsonRootObject))
 		{
-			FDateTime::Parse(JsonRootObject->GetStringField("SaveDate"), SaveDate);
 
 			CharName = JsonRootObject->GetStringField("Character");
 
