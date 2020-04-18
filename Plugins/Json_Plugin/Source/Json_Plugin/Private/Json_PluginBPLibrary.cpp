@@ -13,7 +13,7 @@ UJson_PluginBPLibrary::UJson_PluginBPLibrary(const FObjectInitializer& ObjectIni
 
 }
 
-bool UJson_PluginBPLibrary::WriteInventoryData(FString FileName, FString CharName, TArray<AActor*> InventoryItems, TArray<int> InventoryCount)
+bool UJson_PluginBPLibrary::WriteJsonFile(FString FileName, FString CharName, TArray<AActor*> InventoryItems, TArray<int> InventoryCount)
 {
 	JsonObjectPtr JsonRootObject = MakeShareable(new FJsonObject);
 
@@ -47,7 +47,7 @@ bool UJson_PluginBPLibrary::WriteInventoryData(FString FileName, FString CharNam
 	return FFileHelper::SaveStringToFile(OutputString, *Path);
 }
 
-bool UJson_PluginBPLibrary::ReadInventoryData(FString FileName, FString & CharName, TArray<FString>& InventoryItems, TArray<int>& InventoryCount)
+bool UJson_PluginBPLibrary::ReadJsonFile(FString FileName, FString & CharName, TArray<FString>& InventoryItems, TArray<int>& InventoryCount)
 {
 	FString RawData;
 	FString Path;
