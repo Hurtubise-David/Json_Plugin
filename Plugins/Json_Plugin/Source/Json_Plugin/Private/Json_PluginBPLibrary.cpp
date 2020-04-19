@@ -77,6 +77,8 @@ bool UJson_PluginBPLibrary::ReadJsonFile(FString FileName, FString & CharName, T
 			{
 				InventoryCount.Add(V->AsNumber());
 			}
+
+			return true;
 		}
 	}
 
