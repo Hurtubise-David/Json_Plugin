@@ -10,6 +10,7 @@
 */
 
 typedef TSharedPtr<FJsonObject> JsonObjectPtr;
+typedef TSharedPtr<FJsonValue> JsonValuePtr;
 typedef FString FullPath;
 
 UCLASS()
@@ -21,6 +22,6 @@ class UJson_PluginBPLibrary : public UBlueprintFunctionLibrary
 		static bool WriteJsonFile(FString FileName, FString CharName, TArray<AActor*> InventoryItems, TArray<int> InventoryCount);
 
 	UFUNCTION(BlueprintCallable, Category = "Json Utilities")
-		static bool ReadJsonFile(FString FileName, FString& CharName, TArray<FString>& InventoryItems, TArray<int>& InventoryCount);
+		static bool ReadJsonFile(FString FileName, FString & Server, TArray<FString>& ServerItems, TArray<int>& ItemValue);
 
 };

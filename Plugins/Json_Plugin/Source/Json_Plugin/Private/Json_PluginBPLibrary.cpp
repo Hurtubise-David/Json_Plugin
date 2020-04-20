@@ -47,7 +47,7 @@ bool UJson_PluginBPLibrary::WriteJsonFile(FString FileName, FString CharName, TA
 	return FFileHelper::SaveStringToFile(OutputString, *Path);
 }
 
-bool UJson_PluginBPLibrary::ReadJsonFile(FString FileName, FString & CharName, TArray<FString>& InventoryItems, TArray<int>& InventoryCount)
+bool UJson_PluginBPLibrary::ReadJsonFile(FString FileName, FString & Server, TArray<FString>& ServerItems, TArray<int>& ItemValue)
 {
 	FString RawData;
 	FString Path;
@@ -58,29 +58,30 @@ bool UJson_PluginBPLibrary::ReadJsonFile(FString FileName, FString & CharName, T
 	bool bloadedfile = FFileHelper::LoadFileToString(RawData, *Path);
 
 	if (bloadedfile)
-	{
-		JsonObjectPtr JsonRootObject = MakeShareable(new FJsonObject());
-
-		TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(RawData);
-
-		if (FJsonSerializer::Deserialize(JsonReader, JsonRootObject))
 		{
+			JsonObjectPtr JsonMainObject = MakeShareable(new FJsonObject());
+			TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(RawData);
 
-			CharName = JsonRootObject->GetStringField("Character");
-
-			for (TSharedPtr<FJsonValue> V : JsonRootObject->GetArrayField("Items"))
+			if (FJsonSerializer::Deserialize(JsonReader, JsonMainObject))
 			{
-				InventoryItems.Add(V->AsString());
-			}
+					Server = JsonMainObject->GetStringField("Servers");
+					
+					for (JsonValuePtr V : JsonMainObject->GetArrayField("ID"))
+					{
+						ServerItems.Add(V->AsString());
+					}
 
-			for (TSharedPtr<FJsonValue> V : JsonRootObject->GetArrayField("ItemCount"))
-			{
-				InventoryCount.Add(V->AsNumber());
-			}
+					for (JsonValuePtr V : JsonMainObject->GetArrayField("Force"))
+					{
+						ServerItems.Add(V->AsString());
+					}
 
+					for (JsonValuePtr V : JsonMainObject->GetArrayField("Mode"))
+					{
+						ItemValue.Add(V->AsNumber());
+					}
 			return true;
+			}
 		}
-	}
-
 	return false;
 }
