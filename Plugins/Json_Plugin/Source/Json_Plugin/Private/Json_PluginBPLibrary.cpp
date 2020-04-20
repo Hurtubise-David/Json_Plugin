@@ -45,7 +45,7 @@ bool UJson_PluginBPLibrary::WriteJsonFile(FString FileName, FString Server, TArr
 	return FFileHelper::SaveStringToFile(OutputString, *Path);
 }
 
-bool UJson_PluginBPLibrary::ReadJsonFile(FString FileName, FString & Server, TArray<FString>& ServerItems, TArray<int>& ItemValue)
+bool UJson_PluginBPLibrary::ReadJsonFile(FString FileName, FString &Server, TArray<FString> &ServerItems, TArray<int> &ItemValue)
 {
 	FString RawData;
 	FString Path;

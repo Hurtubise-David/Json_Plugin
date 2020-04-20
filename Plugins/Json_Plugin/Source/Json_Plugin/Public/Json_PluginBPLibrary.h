@@ -22,6 +22,6 @@ class UJson_PluginBPLibrary : public UBlueprintFunctionLibrary
 	static bool WriteJsonFile(FString FileName, FString Server, TArray<FString> ServerItems, TArray<int> ItemValue);
 
 	UFUNCTION(BlueprintCallable, Category = "Json Utilities")
-	static bool ReadJsonFile(FString FileName, FString & Server, TArray<FString>& ServerItems, TArray<int>& ItemValue);
+	static bool ReadJsonFile(FString FileName, FString &Server, TArray<FString> &ServerItems, TArray<int> &ItemValue);
 
 };
