@@ -13,31 +13,29 @@ UJson_PluginBPLibrary::UJson_PluginBPLibrary(const FObjectInitializer& ObjectIni
 
 }
 
-bool UJson_PluginBPLibrary::WriteJsonFile(FString FileName, FString CharName, TArray<AActor*> InventoryItems, TArray<int> InventoryCount)
+bool UJson_PluginBPLibrary::WriteJsonFile(FString FileName, FString Server, TArray<FString> ServerItems, TArray<int> ItemValue)
 {
-	JsonObjectPtr JsonRootObject = MakeShareable(new FJsonObject);
+	JsonObjectPtr JsonMainObject = MakeShareable(new FJsonObject);
 
-	JsonRootObject->SetStringField("Character", CharName);
+	JsonMainObject->SetStringField("Servers", Server);
 
-	TArray<TSharedPtr<FJsonValue>> InventoryItemObjects;
-	for (AActor* obj : InventoryItems)
+	TArray<JsonValuePtr> ServerItemsArray;
+	for (FString V : ServerItems)
 	{
-		InventoryItemObjects.Add(MakeShareable(new FJsonValueString(obj->GetFullName())));
+		ServerItemsArray.Add(MakeShareable(new FJsonValueString(V)));
 	}
+	JsonMainObject->SetArrayField("ID", ServerItemsArray);
 
-	JsonRootObject->SetArrayField("Items", InventoryItemObjects);
-
-	TArray<TSharedPtr<FJsonValue>> InventoryItemCountArray;
-	for (int i : InventoryCount)
+	TArray<JsonValuePtr> ItemValueCountArray;
+	for (int i : ItemValue)
 	{
-		InventoryItemCountArray.Add(MakeShareable(new FJsonValueNumber(i)));
+		ItemValueCountArray.Add(MakeShareable(new FJsonValueNumber(i)));
 	}
-
-	JsonRootObject->SetArrayField("ItemCount", InventoryItemCountArray);
+	JsonMainObject->SetArrayField("Mode", ItemValueCountArray);
 
 	FString OutputString;
 	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
-	FJsonSerializer::Serialize(JsonRootObject.ToSharedRef(), Writer);
+	FJsonSerializer::Serialize(JsonMainObject.ToSharedRef(), Writer);
 
 	FString Path;
 	Path = FPaths::ProjectSavedDir() / "Json";
@@ -67,11 +65,6 @@ bool UJson_PluginBPLibrary::ReadJsonFile(FString FileName, FString & Server, TAr
 					Server = JsonMainObject->GetStringField("Servers");
 					
 					for (JsonValuePtr V : JsonMainObject->GetArrayField("ID"))
-					{
-						ServerItems.Add(V->AsString());
-					}
-
-					for (JsonValuePtr V : JsonMainObject->GetArrayField("Force"))
 					{
 						ServerItems.Add(V->AsString());
 					}
