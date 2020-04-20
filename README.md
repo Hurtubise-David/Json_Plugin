@@ -1,5 +1,5 @@
 # Json_Plugin
-UE 4.24 Json_Plugin
+UE 4.24 Json_Plugin exemple for Location Base Entertainment VR
 
 Instruction:
 
