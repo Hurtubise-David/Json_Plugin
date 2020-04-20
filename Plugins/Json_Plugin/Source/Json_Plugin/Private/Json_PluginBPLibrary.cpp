@@ -38,7 +38,7 @@ bool UJson_PluginBPLibrary::WriteJsonFile(FString FileName, FString Server, TArr
 	FJsonSerializer::Serialize(JsonMainObject.ToSharedRef(), Writer);
 
 	FString Path;
-	Path = FPaths::ProjectSavedDir() / "Json";
+	Path = FPaths::ProjectDir() / "Json";
 	Path += "/";
 	Path += FileName;
 
@@ -49,7 +49,7 @@ bool UJson_PluginBPLibrary::ReadJsonFile(FString FileName, FString &Server, TArr
 {
 	FString RawData;
 	FString Path;
-	Path = FPaths::ProjectSavedDir() / "Json";
+	Path = FPaths::ProjectDir() / "Json";
 	Path += "/";
 	Path += FileName;
 

@@ -1,0 +1,9 @@
+{
+	"Servers": "LBEVR",
+	"ID": [
+		"Client1",
+		"Client2",
+		"Client3"
+	],
+	"Mode": [ 3, 5, 6 ]
+}
